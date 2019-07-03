@@ -1,8 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Jun 27 17:36:04 2019
-
-"""
 
 
 from bs4 import BeautifulSoup
