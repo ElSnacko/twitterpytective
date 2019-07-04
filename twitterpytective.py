@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+Created on Thu Jun 27 17:36:04 2019
+
+"""
 
 
 from bs4 import BeautifulSoup
@@ -24,14 +28,12 @@ class twitterpytective:
         option = driver.ChromeOptions().add_argument("--incognito")
         browser = driver.Chrome(r'chromedriver_win32\chromedriver.exe', chrome_options=option)
         browser.get(url)
-        browser.minimize_window()
-        res = browser.page_source.encode('utf-8').strip()
-        soup = BeautifulSoup(res,'html.parser')
-        return soup, browser
+        #browser.minimize_window()
+        return browser
 
 
     def scroller(self,browser):
-        SCROLL_PAUSE_TIME = 1
+        SCROLL_PAUSE_TIME = 1.5
         # Get scroll height
         last_height = browser.execute_script("return document.body.scrollHeight")
         while True:
@@ -42,12 +44,16 @@ class twitterpytective:
             # Calculate new scroll height and compare with last scroll height
             new_height = browser.execute_script("return document.body.scrollHeight")
             if new_height == last_height:
+                htmlcode = browser.page_source.encode('utf-8').strip()
+                return htmlcode
                 break
             last_height = new_height
 
-    def soupcollector(self,soup, browser):
+    def soupcollector(self, browser):
+
         #scroll to the bottom
-        self.scroller(browser)
+        htmlcode= self.scroller(browser)
+        soup = BeautifulSoup(htmlcode, 'html.parser')
     #for max tweet collection per day
         max_tweets=75
         for times in set(self.datelines):
@@ -85,5 +91,5 @@ class twitterpytective:
         twitterdf.to_csv(name,index=False)
         
 call = twitterpytective()
-soup,browser =call.browser(call.urlconfig('hashtag', '2017-11-30','2018-02-28'))
-call.csver(call.soupcollector(soup,browser),'twitterdata.csv')
+browser =call.browser(call.urlconfig('HAHHTAG', '2017-11-30','2018-04-05'))
+call.csver(call.soupcollector(browser),'twitterdata.csv')
