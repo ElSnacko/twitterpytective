@@ -15,6 +15,15 @@ browser =tp.browser(tpe.urlconfig([HASHTAG], [STARTDATE],[ENDDATE]))
 tp.csver(tp.soupcollector(browser),'[NAMEOFCSV].csv')
 ```
 
+Requiements to run library
+```shell
+pandas
+numpy
+datetime
+BeautifulSoup4
+```
+
+
 Under the hood what happens is that with the use of web crawling and scrapping tools (Selenium & Bs4), a browser opens up then a scroll functions is activated to load the webpage fully (due to the infinite scroll) then the information is scrapped with Bs4.
 
 ## Features
